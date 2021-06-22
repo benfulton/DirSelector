@@ -5,8 +5,8 @@ const path = require('path')
 function createWindow () {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 400,
+    height: 400,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     }
@@ -19,10 +19,13 @@ function createWindow () {
     const result = await dialog.showOpenDialog(mainWindow, {
       properties: ['openDirectory']
     })
-    console.log('directories selected', result.filePaths)
     event.sender.send('dirsel',result.filePaths);
   })
 
+  ipcMain.on('selected-dir', async (event, arg) => {
+    console.log(arg)
+    app.quit();
+  })
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
 }

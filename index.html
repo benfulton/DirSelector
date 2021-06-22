@@ -3,36 +3,17 @@
   <head>
     <meta charset="UTF-8">
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <title>Hello World!</title>
+    <title>Directory Select</title>
   </head>
   <body>
-    <h1>Hello World!</h1>
-    We are using Node.js <span id="node-version"></span>,
-    Chromium <span id="chrome-version"></span>,
-    and Electron <span id="electron-version"></span>.
-
-    <p id="server-message">Waiting for server response</p>
-    <select id="recent-directories" Size="10">
+    <select id="recent-directories" Size="10" autofocus>
     </select>
     <br />
 
     <button id="dirs">...</button>
       <p id="selection"></p>
+    <script>
     <!-- You can also require other files to run in this process -->
-    <script>// Create WebSocket connection.
-      const socket = new WebSocket('ws://localhost:8765');
-
-      // Connection opened
-      socket.addEventListener('open', function (event) {
-          socket.send('Hello Server!');
-      });
-
-      // Listen for messages
-      socket.addEventListener('message', function (event) {
-        let msg = document.querySelector("#server-message");
-        msg.textContent = 'Message from server: ' + event.data;
-      });
-
       selectFolder = (event) => {
         document.querySelector("#selection").textContent = document.querySelector("#myFile").files[0].path
       }

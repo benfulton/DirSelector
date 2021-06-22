@@ -15,13 +15,18 @@ window.addEventListener('DOMContentLoaded', () => {
       option.text = item;
       recent_dirs.add(option);
     })
+    recent_dirs.selectedIndex = 0;
   }
   else
   {
     recent_dirs.style.display = 'none'
   }
-  for (const type of ['chrome', 'node', 'electron']) {
-    replaceText(`${type}-version`, process.versions[type])
+
+  document.querySelector("#recent-directories").onkeypress = function (e) {
+    e.preventDefault();
+    if (e.which === 13) {
+      ipcRenderer.send('selected-dir', this.value)
+    }
   }
 })
 
@@ -40,5 +45,5 @@ ipcRenderer.on('dirsel', (event, sel) => {
   current_list = Array.from(recent_dirs.options).map((opt) => opt.value);
   current_list.push(sel);
   localStorage.setItem('selection', JSON.stringify(current_list));
-  window.close();
+  ipcRenderer.send('selected-dir', sel[0])
 })
