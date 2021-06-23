@@ -43,7 +43,8 @@ process.once('loaded', () => {
 ipcRenderer.on('dirsel', (event, sel) => {
   let recent_dirs = document.querySelector("#recent-directories");
   current_list = Array.from(recent_dirs.options).map((opt) => opt.value);
-  current_list.push(sel);
+  current_list.unshift(sel);
+  current_list.length = Math.min(current_list.length, 10);
   localStorage.setItem('selection', JSON.stringify(current_list));
   ipcRenderer.send('selected-dir', sel[0])
 })
